@@ -1,0 +1,39 @@
+#!/bin/bash
+#
+# Prepares the upgrade.
+#
+# @author Robert Boloc <robertboloc@gmail.com>
+# @copyright (c) 2013, Robert Boloc (http://robertboloc.eu)
+# @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+#
+
+# Load the config
+. migration_conf
+
+# Unzip the dump (if it's zipped)
+. sql_unzip
+
+# Split by table
+. sql_split $BASEPATH'db/backup.sql' english $BASEPATH'db/sqls/'
+
+# Exclude unwanted tables
+. sql_exclude
+
+# Change collation to utf8_general_ci
+. sql_collation
+
+# Change engine to InnoDB
+. sql_engine
+
+# Import the resulting SQL
+. sql_import
+
+# Apply fixes
+echo $NOW'Applying upgrade fixes'
+$PHP $BASEPATH''fixes/index.php
+
+# Enable partial upgrade
+. moodle_enable_partial_upgrade
+
+# Cleanup generated files
+. sql_cleanup

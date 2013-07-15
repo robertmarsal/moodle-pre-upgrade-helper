@@ -1,0 +1,45 @@
+#!/bin/bash
+#
+# Makes a binary backup of a innodb database.
+#
+# @author Robert Boloc <robertboloc@gmail.com>
+# @copyright (c) 2013, Robert Boloc (http://robertboloc.eu)
+# @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+#
+
+# make sure user is root
+user=`whoami`;
+
+if [ "$user" != "root" ]
+then
+    echo 'This script must be executed as root!';
+    exit 1;
+fi
+
+# make sure the path is set
+if [ "$1" == "" ]
+then
+    echo 'Missing argument - Usage: innodb_backup /path/for/backup';
+    exit 1;
+fi
+
+# create destination path
+destination=$1;
+
+if [[ "$destination" = */* ]]
+then
+    mkdir -p "${destination%/*}";
+fi;
+
+# shutdown mysql server
+echo 'Input MySQL root user password';
+mysqladmin -u root -p shutdown
+
+# backup the binary files
+rsync -azrtv --progress /var/lib/mysql/ibdata1 $destination
+rsync -azrtv --progress /var/lib/mysql/ib_log* $destination
+rsync -azrtv --progress /var/lib/mysql/moodle $destination
+rsync -azrtv --progress /etc/mysql/my.cnf $destination
+
+# restart mysql server
+mysqld

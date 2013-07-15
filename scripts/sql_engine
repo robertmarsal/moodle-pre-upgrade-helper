@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# Converts .sql dumps to InnoDB engine (from MyISAM)
+#
+# @author Robert Boloc <robertboloc@gmail.com>
+# @copyright (c) 2013, Robert Boloc (http://robertboloc.eu)
+# @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+#
+
+for table in `ls $BASEPATH/db/sqls`
+do
+    echo $NOW"Converting "${table}" to InnoDB";
+    # Replace engine and store into a temp file
+	sed -e 's/^) ENGINE=MyISAM/) ENGINE=InnoDB/' $BASEPATH'/db/sqls/'$table > $BASEPATH'/db/sqls/'$table.tmp \
+        &&
+    # Restore temp file to original file
+    mv $BASEPATH'/db/sqls/'$table.tmp $BASEPATH'/db/sqls/'$table
+done

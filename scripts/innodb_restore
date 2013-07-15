@@ -1,0 +1,41 @@
+#!/bin/bash
+#
+# Restores a binary backup of a innoDB database.
+#
+# @author Robert Boloc <robertboloc@gmail.com>
+# @copyright (c) 2013, Robert Boloc (http://robertboloc.eu)
+# @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+#
+
+# make sure user is root
+user=`whoami`;
+
+if [ "$user" != "root" ]
+then
+    echo 'This script must be executed as root!';
+    exit 1;
+fi
+
+# make sure the folder indicated as source exists
+if [ ! -d "$1" ]
+then
+    echo 'Backup source does not exist!';
+    exit 1;
+fi
+
+# save source directory
+sourcedir=$1;
+
+# shutdown mysql server
+echo 'Input MySQL root user password';
+mysqladmin -u root -p shutdown
+
+# restore the binary files
+rsync -azrtv --progress $sourcedir''/ibdata1 /var/lib/mysql/
+rsync -azrtv --progress $sourcedir''/ib_log* /var/lib/mysql/
+rsync -azrtv --progress $sourcedir''/moodle /var/lib/mysql/
+rsync -azrtv --progress $sourcedir''/my.cnf /etc/mysql/my.cnf
+
+# restart mysql server
+mysqld
+service mysql restart

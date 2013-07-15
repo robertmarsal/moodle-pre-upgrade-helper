@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# Converts .sql dumps to utf8_general_ci collation
+#
+# @author Robert Boloc <robertboloc@gmail.com>
+# @copyright (c) 2013, Robert Boloc (http://robertboloc.eu)
+# @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+#
+
+for table in `ls $BASEPATH/db/sqls`
+do
+    echo $NOW"Converting collation of "${table}" to utf8_general_ci";
+    # Replace unwanted collations and store into a temp file
+    sed "s/latin1_swedish_ci/utf8_general_ci/g ;
+         s/utf8_unicode_ci/utf8_general_ci/g ;
+         s/utf8_bin/utf8_general_ci/g ;
+         s/utf8_unicode_ci/utf8_general_ci/g" $BASEPATH'/db/sqls/'$table > $BASEPATH'/db/sqls/'$table.tmp \
+         &&
+    # Restore temp file to original file
+    mv $BASEPATH'/db/sqls/'$table.tmp $BASEPATH'/db/sqls/'$table
+done

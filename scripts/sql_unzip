@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# @author Robert Boloc <robertboloc@gmail.com>
+# @copyright (c) 2013, Robert Boloc (http://robertboloc.eu)
+# @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+#
+
+if [ -f $BASEPATH/db/backup.sql.gz ]
+then
+    echo $NOW'Unzipping dump file backup.sql.gz -> backup.sql';
+    gunzip $BASEPATH/db/backup.sql.gz;
+elif [ -f $BASEPATH/db/backup.sql.bz2 ]
+then
+    echo $NOW'Unzipping dump file backup.sql.bz2 -> backup.sql';
+    bunzip2 $BASEPATH/db/backup.sql.bz2;
+else
+    echo $NOW'Missing file'$BASEPATH'db/backup.sql.(gz|bz2)';
+fi

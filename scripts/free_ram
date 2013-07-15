@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# Frees up RAM in Ubuntu. Must be run as sudo.
+#
+# @author Robert Boloc <robertboloc@gmail.com>
+# @copyright (c) 2013, Robert Boloc (http://robertboloc.eu)
+# @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+#
+
+free -m
+sync
+echo 3 > /proc/sys/vm/drop_caches
+free -m

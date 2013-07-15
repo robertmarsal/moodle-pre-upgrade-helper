@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# Config file of the migration scripts.
+#
+# @author Robert Boloc <robertboloc@gmail.com>
+# @copyright (c) 2013, Robert Boloc (http://robertboloc.eu)
+# @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+#
+
+BASEPATH=/sre/migration/
+PHP='/usr/bin/php';
+NOW=`date +"%d %b %Y %T "`
+EXCLUDE='
+mdl_log_2005_2006
+mdl_log_2006_2007
+mdl_log_2007_2008
+mdl_log_2008_2009
+mdl_log_2009_2010
+mdl_log_2010_2011
+mdl_log_2011_2012
+';

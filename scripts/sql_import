@@ -1,0 +1,14 @@
+#!/bin/bash
+#
+# Imports all the .sql dumps from the $BASEPATH/db/sqls into the database
+#
+# @author Robert Boloc <robertboloc@gmail.com>
+# @copyright (c) 2013, Robert Boloc (http://robertboloc.eu)
+# @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+#
+
+for table in `ls $BASEPATH/db/sqls`
+do
+    echo $NOW"Importing "${table};
+    mysql -u root -p -h localhost moodle < $BASEPATH'/db/sqls/'$table
+done

@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# Enables partial upgrade of the moodle database (no quiz upgrade)
+#
+# @author Robert Boloc <robertboloc@gmail.com>
+# @copyright (c) 2013, Robert Boloc (http://robertboloc.eu)
+# @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+#
+
+cat <<EOF > /var/www/moodle/admin/tool/qeupgradehelper/partialupgrade.php
+<?php
+
+function tool_qeupgradehelper_get_quizzes_to_upgrade() {
+    return array();
+}
+EOF
