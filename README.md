@@ -2,7 +2,7 @@ Moodle 2.x.x Pre-Upgrade Helper
 =================================
 This repository contains tools for preparing a Moodle **1.9.x** installation for an upgrade to the Moodle **2.x.x** version
 
-What it does?
+What does it do?
 ---------------
 The scripts and fixes contained in this repository prepare your moodle database for the **2.x.x** upgrade by automating some of the pre-processes, using optimized tecniques. It follows the "official" procedure, but uses alternative aproaches all for maximum perfomance and time optimization.
 
@@ -37,7 +37,7 @@ Tips
 License
 ---------------
 GNU GPL v3
-Copyright (c) 2013 Robert Boloc
+Copyright (c) 2013-2014 Robert Boloc
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
